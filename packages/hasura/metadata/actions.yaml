@@ -1,6 +1,30 @@
-actions: []
+actions:
+- name: signIn
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3000/api/signIn
+    forward_client_headers: true
+    headers:
+    - name: ACTION_SECRET
+      value_from_env: ACTION_SECRET
+  permissions:
+  - role: anonymous
+- name: signUp
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3000/api/signUp
+    forward_client_headers: true
+    headers:
+    - name: ACTION_SECRET
+      value_from_env: ACTION_SECRET
+  permissions:
+  - role: anonymous
 custom_types:
   enums: []
-  input_objects: []
-  objects: []
+  input_objects:
+  - name: SignUpInput
+  - name: SignInInput
+  objects:
+  - name: SignUpOutput
+  - name: SignInOutput
   scalars: []
