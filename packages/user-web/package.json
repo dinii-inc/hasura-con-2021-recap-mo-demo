@@ -6,17 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier . --write --loglevel warn && yarn lint --fix",
+    "graphql:codegen": "yarn graphql-codegen",
+    "graphql:download-schema": "source .env && get-graphql-schema ${HASURA_GRAPHQL_URL} --header='x-hasura-admin-secret=${HASURA_GRAPHQL_ADMIN_SECRET}' --header 'x-hasura-role=user' > store/schema.gql"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.20",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "dotenv": "^10.0.0",
     "next": "11.0.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react": "^17.0.2",
+    "react-dom": "17.0.2",
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.5",
+    "@graphql-codegen/near-operation-file-preset": "^1.18.2",
+    "@graphql-codegen/typescript": "^1.22.2",
+    "@graphql-codegen/typescript-document-nodes": "^1.17.13",
+    "@graphql-codegen/typescript-operations": "^1.18.1",
+    "@graphql-codegen/typescript-react-apollo": "^2.2.6",
+    "@graphql-codegen/typescript-resolvers": "^1.19.3",
     "@types/react": "17.0.11",
+    "@types/styled-components": "^5.1.10",
+    "babel-plugin-styled-components": "^1.12.0",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
+    "get-graphql-schema": "^2.1.2",
+    "prettier": "^2.3.1",
     "typescript": "4.3.4"
   }
 }

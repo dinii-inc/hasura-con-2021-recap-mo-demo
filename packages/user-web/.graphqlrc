@@ -1,0 +1,36 @@
+schema:
+  - store/schema.gql
+documents: ./**/*.gql
+extensions:
+  codegen:
+    overwrite: true
+    generates:
+      types/graphql.ts:
+        plugins:
+          - typescript
+          - typescript-resolvers
+        config:
+          namingConvention:
+            enumValues: pascal-case#pascalCase
+            transformUnderscore: true
+          scalars:
+            uuid: string
+      .:
+        preset: near-operation-file
+        presetConfig:
+          extension: .ts
+          baseTypesPath: types/graphql.ts
+        plugins:
+          - typescript-document-nodes
+          - typescript-operations
+          - typescript-react-apollo
+        config:
+          gqlImport: "@apollo/client#gql"
+          constEnums: true
+          reactApolloVersion: 3
+          withComponent: false
+          withHOC: false
+          withHooks: true
+          namingConvention:
+            enumValues: pascal-case#pascalCase
+            transformUnderscore: true

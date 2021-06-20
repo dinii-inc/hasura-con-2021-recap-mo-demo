@@ -1,0 +1,18 @@
+schema {
+  query: query_root
+  subscription: subscription_root
+}
+
+"""
+whether this query should be cached (Hasura Cloud only)
+"""
+directive @cached(
+  """
+  measured in seconds
+  """
+  ttl: Int! = 60
+) on QUERY
+
+type query_root
+
+type subscription_root
