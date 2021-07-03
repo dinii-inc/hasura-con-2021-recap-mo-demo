@@ -1,0 +1,1 @@
+CREATE TABLE "public"."menu" ("id" uuid NOT NULL, "categoryId" uuid NOT NULL, "name" text NOT NULL, "price" integer NOT NULL, "image" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("categoryId") REFERENCES "public"."category"("id") ON UPDATE restrict ON DELETE restrict);

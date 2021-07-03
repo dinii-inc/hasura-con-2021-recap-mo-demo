@@ -1,6 +1,70 @@
 - table:
     schema: public
-    name: users
+    name: cartItem
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - menuId
+      - addedUserId
+      - name
+      - price
+      - quantity
+      filter: {}
+- table:
+    schema: public
+    name: category
+  array_relationships:
+  - name: menus
+    using:
+      foreign_key_constraint_on:
+        column: categoryId
+        table:
+          schema: public
+          name: menu
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - name
+      filter: {}
+- table:
+    schema: public
+    name: menu
+  object_relationships:
+  - name: category
+    using:
+      foreign_key_constraint_on: categoryId
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - categoryId
+      - name
+      - price
+      - image
+      filter: {}
+- table:
+    schema: public
+    name: order
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - menuId
+      - orderedUserId
+      - name
+      - price
+      - quantity
+      - orderedAt
+      filter: {}
+- table:
+    schema: public
+    name: user
   select_permissions:
   - role: user
     permission:

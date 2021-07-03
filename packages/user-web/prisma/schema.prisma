@@ -7,8 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id       String @id
+model category {
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name String
+  menu menu[]
+}
+
+model menu {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  categoryId String     @db.Uuid
+  name       String
+  price      Int
+  image      String
+  category   category   @relation(fields: [categoryId], references: [id])
+  cartItem   cartItem[]
+  order      order[]
+}
+
+model user {
+  id       String     @id
   name     String
   password String
+  cartItem cartItem[]
+}
+
+model cartItem {
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  menuId      String @db.Uuid
+  addedUserId String
+  name        String
+  price       String
+  quantity    Int
+  user        user   @relation(fields: [addedUserId], references: [id])
+  menu        menu   @relation(fields: [menuId], references: [id])
+}
+
+model order {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  menuId        String   @db.Uuid
+  orderedUserId String
+  name          String
+  price         String
+  quantity      Int
+  orderedAt     DateTime @db.Timestamp(6)
+  menu          menu     @relation(fields: [menuId], references: [id])
 }
