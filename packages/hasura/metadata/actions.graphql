@@ -16,6 +16,7 @@ type Mutation {
 
 input SignUpInput {
   id : String!
+  name : String!
   password : String!
 }
 

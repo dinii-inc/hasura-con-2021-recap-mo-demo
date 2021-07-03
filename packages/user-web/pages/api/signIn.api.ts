@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
-import { cache } from "pages/api/internal/cache";
 import { issueToken } from "pages/api/internal/issueToken";
 import { isValidRequest } from "pages/api/internal/isValidRequest";
+import { prisma } from "pages/api/internal/prisma";
 
 type Data = { token: string } | { message: string };
 
@@ -10,14 +10,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (!isValidRequest(req, res)) return;
 
   const { id, password } = req.body.input.input;
-  const storedPassword = cache.get(id);
 
-  if (typeof id !== "string" || id === "") return res.status(400).json({ message: "id is required" });
-  if (typeof password !== "string" || password === "") return res.status(400).json({ message: "password is required" });
-  if (!storedPassword) return res.status(400).json({ message: "this user has not been registered" });
+  if (typeof id !== "string" || id === "") return res.status(400).json({ message: "`id` is required" });
+  if (typeof password !== "string" || password === "") return res.status(400).json({ message: "`password` is required" });
 
-  const isValid = await bcrypt.compare(password, storedPassword);
-  if (!isValid) return res.status(400).json({ message: "password is incorrect" });
+  const user = await prisma.users.findFirst({ where: { id } });
+  if (!user) return res.status(400).json({ message: "This user has not been registered" });
+
+  const isValid = await bcrypt.compare(password, user.password);
+  if (!isValid) return res.status(400).json({ message: "Password is incorrect" });
 
   const token = issueToken(id);
 

@@ -147,6 +147,7 @@ type SignInOutput {
 
 input SignUpInput {
   id: String!
+  name: String!
   password: String!
 }
 
@@ -258,6 +259,7 @@ columns and relationships of "users"
 type users {
   id: String!
   name: String!
+  password: String!
 }
 
 """
@@ -286,6 +288,7 @@ input users_bool_exp {
   _or: [users_bool_exp!]
   id: String_comparison_exp
   name: String_comparison_exp
+  password: String_comparison_exp
 }
 
 """
@@ -302,18 +305,21 @@ input type for inserting data into table "users"
 input users_insert_input {
   id: String
   name: String
+  password: String
 }
 
 """aggregate max on columns"""
 type users_max_fields {
   id: String
   name: String
+  password: String
 }
 
 """aggregate min on columns"""
 type users_min_fields {
   id: String
   name: String
+  password: String
 }
 
 """
@@ -340,6 +346,7 @@ input users_on_conflict {
 input users_order_by {
   id: order_by
   name: order_by
+  password: order_by
 }
 
 """primary key columns input for table: users"""
@@ -356,6 +363,9 @@ enum users_select_column {
 
   """column name"""
   name
+
+  """column name"""
+  password
 }
 
 """
@@ -364,6 +374,7 @@ input type for updating data in table "users"
 input users_set_input {
   id: String
   name: String
+  password: String
 }
 
 """
@@ -375,5 +386,8 @@ enum users_update_column {
 
   """column name"""
   name
+
+  """column name"""
+  password
 }
 
