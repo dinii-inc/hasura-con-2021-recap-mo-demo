@@ -1,0 +1,13 @@
+query IndexGetCategoriesAndMenus {
+  category {
+    id
+    name
+  }
+  menu {
+    id
+    categoryId
+    name
+    price
+    image
+  }
+}

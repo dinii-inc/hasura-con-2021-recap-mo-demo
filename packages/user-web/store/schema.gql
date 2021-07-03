@@ -10,64 +10,1111 @@ directive @cached(
   ttl: Int! = 60
 ) on QUERY
 
+"""
+columns and relationships of "cartItem"
+"""
+type cartItem {
+  addedUserId: String!
+  id: uuid!
+  menuId: uuid!
+  name: String!
+  price: String!
+  quantity: Int!
+}
+
+"""
+aggregated selection of "cartItem"
+"""
+type cartItem_aggregate {
+  aggregate: cartItem_aggregate_fields
+  nodes: [cartItem!]!
+}
+
+"""
+aggregate fields of "cartItem"
+"""
+type cartItem_aggregate_fields {
+  avg: cartItem_avg_fields
+  count(columns: [cartItem_select_column!], distinct: Boolean): Int!
+  max: cartItem_max_fields
+  min: cartItem_min_fields
+  stddev: cartItem_stddev_fields
+  stddev_pop: cartItem_stddev_pop_fields
+  stddev_samp: cartItem_stddev_samp_fields
+  sum: cartItem_sum_fields
+  var_pop: cartItem_var_pop_fields
+  var_samp: cartItem_var_samp_fields
+  variance: cartItem_variance_fields
+}
+
+"""aggregate avg on columns"""
+type cartItem_avg_fields {
+  quantity: Float
+}
+
+"""
+Boolean expression to filter rows from the table "cartItem". All fields are combined with a logical 'AND'.
+"""
+input cartItem_bool_exp {
+  _and: [cartItem_bool_exp!]
+  _not: cartItem_bool_exp
+  _or: [cartItem_bool_exp!]
+  addedUserId: String_comparison_exp
+  id: uuid_comparison_exp
+  menuId: uuid_comparison_exp
+  name: String_comparison_exp
+  price: String_comparison_exp
+  quantity: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "cartItem"
+"""
+enum cartItem_constraint {
+  """unique or primary key constraint"""
+  cartItem_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "cartItem"
+"""
+input cartItem_inc_input {
+  quantity: Int
+}
+
+"""
+input type for inserting data into table "cartItem"
+"""
+input cartItem_insert_input {
+  addedUserId: String
+  id: uuid
+  menuId: uuid
+  name: String
+  price: String
+  quantity: Int
+}
+
+"""aggregate max on columns"""
+type cartItem_max_fields {
+  addedUserId: String
+  id: uuid
+  menuId: uuid
+  name: String
+  price: String
+  quantity: Int
+}
+
+"""aggregate min on columns"""
+type cartItem_min_fields {
+  addedUserId: String
+  id: uuid
+  menuId: uuid
+  name: String
+  price: String
+  quantity: Int
+}
+
+"""
+response of any mutation on the table "cartItem"
+"""
+type cartItem_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [cartItem!]!
+}
+
+"""
+on conflict condition type for table "cartItem"
+"""
+input cartItem_on_conflict {
+  constraint: cartItem_constraint!
+  update_columns: [cartItem_update_column!]! = []
+  where: cartItem_bool_exp
+}
+
+"""Ordering options when selecting data from "cartItem"."""
+input cartItem_order_by {
+  addedUserId: order_by
+  id: order_by
+  menuId: order_by
+  name: order_by
+  price: order_by
+  quantity: order_by
+}
+
+"""primary key columns input for table: cartItem"""
+input cartItem_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "cartItem"
+"""
+enum cartItem_select_column {
+  """column name"""
+  addedUserId
+
+  """column name"""
+  id
+
+  """column name"""
+  menuId
+
+  """column name"""
+  name
+
+  """column name"""
+  price
+
+  """column name"""
+  quantity
+}
+
+"""
+input type for updating data in table "cartItem"
+"""
+input cartItem_set_input {
+  addedUserId: String
+  id: uuid
+  menuId: uuid
+  name: String
+  price: String
+  quantity: Int
+}
+
+"""aggregate stddev on columns"""
+type cartItem_stddev_fields {
+  quantity: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type cartItem_stddev_pop_fields {
+  quantity: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type cartItem_stddev_samp_fields {
+  quantity: Float
+}
+
+"""aggregate sum on columns"""
+type cartItem_sum_fields {
+  quantity: Int
+}
+
+"""
+update columns of table "cartItem"
+"""
+enum cartItem_update_column {
+  """column name"""
+  addedUserId
+
+  """column name"""
+  id
+
+  """column name"""
+  menuId
+
+  """column name"""
+  name
+
+  """column name"""
+  price
+
+  """column name"""
+  quantity
+}
+
+"""aggregate var_pop on columns"""
+type cartItem_var_pop_fields {
+  quantity: Float
+}
+
+"""aggregate var_samp on columns"""
+type cartItem_var_samp_fields {
+  quantity: Float
+}
+
+"""aggregate variance on columns"""
+type cartItem_variance_fields {
+  quantity: Float
+}
+
+"""
+columns and relationships of "category"
+"""
+type category {
+  id: uuid!
+
+  """An array relationship"""
+  menus(
+    """distinct select on columns"""
+    distinct_on: [menu_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [menu_order_by!]
+
+    """filter the rows returned"""
+    where: menu_bool_exp
+  ): [menu!]!
+
+  """An aggregate relationship"""
+  menus_aggregate(
+    """distinct select on columns"""
+    distinct_on: [menu_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [menu_order_by!]
+
+    """filter the rows returned"""
+    where: menu_bool_exp
+  ): menu_aggregate!
+  name: String!
+}
+
+"""
+aggregated selection of "category"
+"""
+type category_aggregate {
+  aggregate: category_aggregate_fields
+  nodes: [category!]!
+}
+
+"""
+aggregate fields of "category"
+"""
+type category_aggregate_fields {
+  count(columns: [category_select_column!], distinct: Boolean): Int!
+  max: category_max_fields
+  min: category_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "category". All fields are combined with a logical 'AND'.
+"""
+input category_bool_exp {
+  _and: [category_bool_exp!]
+  _not: category_bool_exp
+  _or: [category_bool_exp!]
+  id: uuid_comparison_exp
+  menus: menu_bool_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "category"
+"""
+enum category_constraint {
+  """unique or primary key constraint"""
+  category_pkey
+}
+
+"""
+input type for inserting data into table "category"
+"""
+input category_insert_input {
+  id: uuid
+  menus: menu_arr_rel_insert_input
+  name: String
+}
+
+"""aggregate max on columns"""
+type category_max_fields {
+  id: uuid
+  name: String
+}
+
+"""aggregate min on columns"""
+type category_min_fields {
+  id: uuid
+  name: String
+}
+
+"""
+response of any mutation on the table "category"
+"""
+type category_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [category!]!
+}
+
+"""
+input type for inserting object relation for remote table "category"
+"""
+input category_obj_rel_insert_input {
+  data: category_insert_input!
+
+  """on conflict condition"""
+  on_conflict: category_on_conflict
+}
+
+"""
+on conflict condition type for table "category"
+"""
+input category_on_conflict {
+  constraint: category_constraint!
+  update_columns: [category_update_column!]! = []
+  where: category_bool_exp
+}
+
+"""Ordering options when selecting data from "category"."""
+input category_order_by {
+  id: order_by
+  menus_aggregate: menu_aggregate_order_by
+  name: order_by
+}
+
+"""primary key columns input for table: category"""
+input category_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "category"
+"""
+enum category_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "category"
+"""
+input category_set_input {
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "category"
+"""
+enum category_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""
+columns and relationships of "menu"
+"""
+type menu {
+  """An object relationship"""
+  category: category!
+  categoryId: uuid!
+  id: uuid!
+  image: String!
+  name: String!
+  price: Int!
+}
+
+"""
+aggregated selection of "menu"
+"""
+type menu_aggregate {
+  aggregate: menu_aggregate_fields
+  nodes: [menu!]!
+}
+
+"""
+aggregate fields of "menu"
+"""
+type menu_aggregate_fields {
+  avg: menu_avg_fields
+  count(columns: [menu_select_column!], distinct: Boolean): Int!
+  max: menu_max_fields
+  min: menu_min_fields
+  stddev: menu_stddev_fields
+  stddev_pop: menu_stddev_pop_fields
+  stddev_samp: menu_stddev_samp_fields
+  sum: menu_sum_fields
+  var_pop: menu_var_pop_fields
+  var_samp: menu_var_samp_fields
+  variance: menu_variance_fields
+}
+
+"""
+order by aggregate values of table "menu"
+"""
+input menu_aggregate_order_by {
+  avg: menu_avg_order_by
+  count: order_by
+  max: menu_max_order_by
+  min: menu_min_order_by
+  stddev: menu_stddev_order_by
+  stddev_pop: menu_stddev_pop_order_by
+  stddev_samp: menu_stddev_samp_order_by
+  sum: menu_sum_order_by
+  var_pop: menu_var_pop_order_by
+  var_samp: menu_var_samp_order_by
+  variance: menu_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "menu"
+"""
+input menu_arr_rel_insert_input {
+  data: [menu_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: menu_on_conflict
+}
+
+"""aggregate avg on columns"""
+type menu_avg_fields {
+  price: Float
+}
+
+"""
+order by avg() on columns of table "menu"
+"""
+input menu_avg_order_by {
+  price: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "menu". All fields are combined with a logical 'AND'.
+"""
+input menu_bool_exp {
+  _and: [menu_bool_exp!]
+  _not: menu_bool_exp
+  _or: [menu_bool_exp!]
+  category: category_bool_exp
+  categoryId: uuid_comparison_exp
+  id: uuid_comparison_exp
+  image: String_comparison_exp
+  name: String_comparison_exp
+  price: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "menu"
+"""
+enum menu_constraint {
+  """unique or primary key constraint"""
+  menu_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "menu"
+"""
+input menu_inc_input {
+  price: Int
+}
+
+"""
+input type for inserting data into table "menu"
+"""
+input menu_insert_input {
+  category: category_obj_rel_insert_input
+  categoryId: uuid
+  id: uuid
+  image: String
+  name: String
+  price: Int
+}
+
+"""aggregate max on columns"""
+type menu_max_fields {
+  categoryId: uuid
+  id: uuid
+  image: String
+  name: String
+  price: Int
+}
+
+"""
+order by max() on columns of table "menu"
+"""
+input menu_max_order_by {
+  categoryId: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  price: order_by
+}
+
+"""aggregate min on columns"""
+type menu_min_fields {
+  categoryId: uuid
+  id: uuid
+  image: String
+  name: String
+  price: Int
+}
+
+"""
+order by min() on columns of table "menu"
+"""
+input menu_min_order_by {
+  categoryId: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  price: order_by
+}
+
+"""
+response of any mutation on the table "menu"
+"""
+type menu_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [menu!]!
+}
+
+"""
+on conflict condition type for table "menu"
+"""
+input menu_on_conflict {
+  constraint: menu_constraint!
+  update_columns: [menu_update_column!]! = []
+  where: menu_bool_exp
+}
+
+"""Ordering options when selecting data from "menu"."""
+input menu_order_by {
+  category: category_order_by
+  categoryId: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  price: order_by
+}
+
+"""primary key columns input for table: menu"""
+input menu_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "menu"
+"""
+enum menu_select_column {
+  """column name"""
+  categoryId
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name
+
+  """column name"""
+  price
+}
+
+"""
+input type for updating data in table "menu"
+"""
+input menu_set_input {
+  categoryId: uuid
+  id: uuid
+  image: String
+  name: String
+  price: Int
+}
+
+"""aggregate stddev on columns"""
+type menu_stddev_fields {
+  price: Float
+}
+
+"""
+order by stddev() on columns of table "menu"
+"""
+input menu_stddev_order_by {
+  price: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type menu_stddev_pop_fields {
+  price: Float
+}
+
+"""
+order by stddev_pop() on columns of table "menu"
+"""
+input menu_stddev_pop_order_by {
+  price: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type menu_stddev_samp_fields {
+  price: Float
+}
+
+"""
+order by stddev_samp() on columns of table "menu"
+"""
+input menu_stddev_samp_order_by {
+  price: order_by
+}
+
+"""aggregate sum on columns"""
+type menu_sum_fields {
+  price: Int
+}
+
+"""
+order by sum() on columns of table "menu"
+"""
+input menu_sum_order_by {
+  price: order_by
+}
+
+"""
+update columns of table "menu"
+"""
+enum menu_update_column {
+  """column name"""
+  categoryId
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name
+
+  """column name"""
+  price
+}
+
+"""aggregate var_pop on columns"""
+type menu_var_pop_fields {
+  price: Float
+}
+
+"""
+order by var_pop() on columns of table "menu"
+"""
+input menu_var_pop_order_by {
+  price: order_by
+}
+
+"""aggregate var_samp on columns"""
+type menu_var_samp_fields {
+  price: Float
+}
+
+"""
+order by var_samp() on columns of table "menu"
+"""
+input menu_var_samp_order_by {
+  price: order_by
+}
+
+"""aggregate variance on columns"""
+type menu_variance_fields {
+  price: Float
+}
+
+"""
+order by variance() on columns of table "menu"
+"""
+input menu_variance_order_by {
+  price: order_by
+}
+
 """mutation root"""
 type mutation_root {
   """
-  delete data from the table: "users"
+  delete data from the table: "cartItem"
   """
-  delete_users(
+  delete_cartItem(
     """filter the rows which have to be deleted"""
-    where: users_bool_exp!
-  ): users_mutation_response
+    where: cartItem_bool_exp!
+  ): cartItem_mutation_response
 
   """
-  delete single row from the table: "users"
+  delete single row from the table: "cartItem"
   """
-  delete_users_by_pk(id: String!): users
+  delete_cartItem_by_pk(id: uuid!): cartItem
 
   """
-  insert data into the table: "users"
+  delete data from the table: "category"
   """
-  insert_users(
+  delete_category(
+    """filter the rows which have to be deleted"""
+    where: category_bool_exp!
+  ): category_mutation_response
+
+  """
+  delete single row from the table: "category"
+  """
+  delete_category_by_pk(id: uuid!): category
+
+  """
+  delete data from the table: "menu"
+  """
+  delete_menu(
+    """filter the rows which have to be deleted"""
+    where: menu_bool_exp!
+  ): menu_mutation_response
+
+  """
+  delete single row from the table: "menu"
+  """
+  delete_menu_by_pk(id: uuid!): menu
+
+  """
+  delete data from the table: "order"
+  """
+  delete_order(
+    """filter the rows which have to be deleted"""
+    where: order_bool_exp!
+  ): order_mutation_response
+
+  """
+  delete single row from the table: "order"
+  """
+  delete_order_by_pk(id: uuid!): order
+
+  """
+  delete data from the table: "user"
+  """
+  delete_user(
+    """filter the rows which have to be deleted"""
+    where: user_bool_exp!
+  ): user_mutation_response
+
+  """
+  delete single row from the table: "user"
+  """
+  delete_user_by_pk(id: String!): user
+
+  """
+  insert data into the table: "cartItem"
+  """
+  insert_cartItem(
     """the rows to be inserted"""
-    objects: [users_insert_input!]!
+    objects: [cartItem_insert_input!]!
 
     """on conflict condition"""
-    on_conflict: users_on_conflict
-  ): users_mutation_response
+    on_conflict: cartItem_on_conflict
+  ): cartItem_mutation_response
 
   """
-  insert a single row into the table: "users"
+  insert a single row into the table: "cartItem"
   """
-  insert_users_one(
+  insert_cartItem_one(
     """the row to be inserted"""
-    object: users_insert_input!
+    object: cartItem_insert_input!
 
     """on conflict condition"""
-    on_conflict: users_on_conflict
-  ): users
+    on_conflict: cartItem_on_conflict
+  ): cartItem
+
+  """
+  insert data into the table: "category"
+  """
+  insert_category(
+    """the rows to be inserted"""
+    objects: [category_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: category_on_conflict
+  ): category_mutation_response
+
+  """
+  insert a single row into the table: "category"
+  """
+  insert_category_one(
+    """the row to be inserted"""
+    object: category_insert_input!
+
+    """on conflict condition"""
+    on_conflict: category_on_conflict
+  ): category
+
+  """
+  insert data into the table: "menu"
+  """
+  insert_menu(
+    """the rows to be inserted"""
+    objects: [menu_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: menu_on_conflict
+  ): menu_mutation_response
+
+  """
+  insert a single row into the table: "menu"
+  """
+  insert_menu_one(
+    """the row to be inserted"""
+    object: menu_insert_input!
+
+    """on conflict condition"""
+    on_conflict: menu_on_conflict
+  ): menu
+
+  """
+  insert data into the table: "order"
+  """
+  insert_order(
+    """the rows to be inserted"""
+    objects: [order_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: order_on_conflict
+  ): order_mutation_response
+
+  """
+  insert a single row into the table: "order"
+  """
+  insert_order_one(
+    """the row to be inserted"""
+    object: order_insert_input!
+
+    """on conflict condition"""
+    on_conflict: order_on_conflict
+  ): order
+
+  """
+  insert data into the table: "user"
+  """
+  insert_user(
+    """the rows to be inserted"""
+    objects: [user_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: user_on_conflict
+  ): user_mutation_response
+
+  """
+  insert a single row into the table: "user"
+  """
+  insert_user_one(
+    """the row to be inserted"""
+    object: user_insert_input!
+
+    """on conflict condition"""
+    on_conflict: user_on_conflict
+  ): user
   signIn(input: SignInInput!): SignInOutput
   signUp(input: SignUpInput!): SignUpOutput
 
   """
-  update data of the table: "users"
+  update data of the table: "cartItem"
   """
-  update_users(
+  update_cartItem(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: cartItem_inc_input
+
     """sets the columns of the filtered rows to the given values"""
-    _set: users_set_input
+    _set: cartItem_set_input
 
     """filter the rows which have to be updated"""
-    where: users_bool_exp!
-  ): users_mutation_response
+    where: cartItem_bool_exp!
+  ): cartItem_mutation_response
 
   """
-  update single row of the table: "users"
+  update single row of the table: "cartItem"
   """
-  update_users_by_pk(
+  update_cartItem_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: cartItem_inc_input
+
     """sets the columns of the filtered rows to the given values"""
-    _set: users_set_input
-    pk_columns: users_pk_columns_input!
-  ): users
+    _set: cartItem_set_input
+    pk_columns: cartItem_pk_columns_input!
+  ): cartItem
+
+  """
+  update data of the table: "category"
+  """
+  update_category(
+    """sets the columns of the filtered rows to the given values"""
+    _set: category_set_input
+
+    """filter the rows which have to be updated"""
+    where: category_bool_exp!
+  ): category_mutation_response
+
+  """
+  update single row of the table: "category"
+  """
+  update_category_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: category_set_input
+    pk_columns: category_pk_columns_input!
+  ): category
+
+  """
+  update data of the table: "menu"
+  """
+  update_menu(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: menu_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: menu_set_input
+
+    """filter the rows which have to be updated"""
+    where: menu_bool_exp!
+  ): menu_mutation_response
+
+  """
+  update single row of the table: "menu"
+  """
+  update_menu_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: menu_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: menu_set_input
+    pk_columns: menu_pk_columns_input!
+  ): menu
+
+  """
+  update data of the table: "order"
+  """
+  update_order(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: order_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: order_set_input
+
+    """filter the rows which have to be updated"""
+    where: order_bool_exp!
+  ): order_mutation_response
+
+  """
+  update single row of the table: "order"
+  """
+  update_order_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: order_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: order_set_input
+    pk_columns: order_pk_columns_input!
+  ): order
+
+  """
+  update data of the table: "user"
+  """
+  update_user(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_bool_exp!
+  ): user_mutation_response
+
+  """
+  update single row of the table: "user"
+  """
+  update_user_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_set_input
+    pk_columns: user_pk_columns_input!
+  ): user
+}
+
+"""
+columns and relationships of "order"
+"""
+type order {
+  id: uuid!
+  menuId: uuid!
+  name: String!
+  orderedAt: timestamp!
+  orderedUserId: String!
+  price: String!
+  quantity: Int!
+}
+
+"""
+aggregated selection of "order"
+"""
+type order_aggregate {
+  aggregate: order_aggregate_fields
+  nodes: [order!]!
+}
+
+"""
+aggregate fields of "order"
+"""
+type order_aggregate_fields {
+  avg: order_avg_fields
+  count(columns: [order_select_column!], distinct: Boolean): Int!
+  max: order_max_fields
+  min: order_min_fields
+  stddev: order_stddev_fields
+  stddev_pop: order_stddev_pop_fields
+  stddev_samp: order_stddev_samp_fields
+  sum: order_sum_fields
+  var_pop: order_var_pop_fields
+  var_samp: order_var_samp_fields
+  variance: order_variance_fields
+}
+
+"""aggregate avg on columns"""
+type order_avg_fields {
+  quantity: Float
+}
+
+"""
+Boolean expression to filter rows from the table "order". All fields are combined with a logical 'AND'.
+"""
+input order_bool_exp {
+  _and: [order_bool_exp!]
+  _not: order_bool_exp
+  _or: [order_bool_exp!]
+  id: uuid_comparison_exp
+  menuId: uuid_comparison_exp
+  name: String_comparison_exp
+  orderedAt: timestamp_comparison_exp
+  orderedUserId: String_comparison_exp
+  price: String_comparison_exp
+  quantity: Int_comparison_exp
 }
 
 """column ordering options"""
@@ -91,13 +1138,199 @@ enum order_by {
   desc_nulls_last
 }
 
+"""
+unique or primary key constraints on table "order"
+"""
+enum order_constraint {
+  """unique or primary key constraint"""
+  order_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "order"
+"""
+input order_inc_input {
+  quantity: Int
+}
+
+"""
+input type for inserting data into table "order"
+"""
+input order_insert_input {
+  id: uuid
+  menuId: uuid
+  name: String
+  orderedAt: timestamp
+  orderedUserId: String
+  price: String
+  quantity: Int
+}
+
+"""aggregate max on columns"""
+type order_max_fields {
+  id: uuid
+  menuId: uuid
+  name: String
+  orderedAt: timestamp
+  orderedUserId: String
+  price: String
+  quantity: Int
+}
+
+"""aggregate min on columns"""
+type order_min_fields {
+  id: uuid
+  menuId: uuid
+  name: String
+  orderedAt: timestamp
+  orderedUserId: String
+  price: String
+  quantity: Int
+}
+
+"""
+response of any mutation on the table "order"
+"""
+type order_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [order!]!
+}
+
+"""
+on conflict condition type for table "order"
+"""
+input order_on_conflict {
+  constraint: order_constraint!
+  update_columns: [order_update_column!]! = []
+  where: order_bool_exp
+}
+
+"""Ordering options when selecting data from "order"."""
+input order_order_by {
+  id: order_by
+  menuId: order_by
+  name: order_by
+  orderedAt: order_by
+  orderedUserId: order_by
+  price: order_by
+  quantity: order_by
+}
+
+"""primary key columns input for table: order"""
+input order_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "order"
+"""
+enum order_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  menuId
+
+  """column name"""
+  name
+
+  """column name"""
+  orderedAt
+
+  """column name"""
+  orderedUserId
+
+  """column name"""
+  price
+
+  """column name"""
+  quantity
+}
+
+"""
+input type for updating data in table "order"
+"""
+input order_set_input {
+  id: uuid
+  menuId: uuid
+  name: String
+  orderedAt: timestamp
+  orderedUserId: String
+  price: String
+  quantity: Int
+}
+
+"""aggregate stddev on columns"""
+type order_stddev_fields {
+  quantity: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type order_stddev_pop_fields {
+  quantity: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type order_stddev_samp_fields {
+  quantity: Float
+}
+
+"""aggregate sum on columns"""
+type order_sum_fields {
+  quantity: Int
+}
+
+"""
+update columns of table "order"
+"""
+enum order_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  menuId
+
+  """column name"""
+  name
+
+  """column name"""
+  orderedAt
+
+  """column name"""
+  orderedUserId
+
+  """column name"""
+  price
+
+  """column name"""
+  quantity
+}
+
+"""aggregate var_pop on columns"""
+type order_var_pop_fields {
+  quantity: Float
+}
+
+"""aggregate var_samp on columns"""
+type order_var_samp_fields {
+  quantity: Float
+}
+
+"""aggregate variance on columns"""
+type order_variance_fields {
+  quantity: Float
+}
+
 type query_root {
   """
-  fetch data from the table: "users"
+  fetch data from the table: "cartItem"
   """
-  users(
+  cartItem(
     """distinct select on columns"""
-    distinct_on: [users_select_column!]
+    distinct_on: [cartItem_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -106,18 +1339,18 @@ type query_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
+    order_by: [cartItem_order_by!]
 
     """filter the rows returned"""
-    where: users_bool_exp
-  ): [users!]!
+    where: cartItem_bool_exp
+  ): [cartItem!]!
 
   """
-  fetch aggregated fields from the table: "users"
+  fetch aggregated fields from the table: "cartItem"
   """
-  users_aggregate(
+  cartItem_aggregate(
     """distinct select on columns"""
-    distinct_on: [users_select_column!]
+    distinct_on: [cartItem_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -126,14 +1359,186 @@ type query_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
+    order_by: [cartItem_order_by!]
 
     """filter the rows returned"""
-    where: users_bool_exp
-  ): users_aggregate!
+    where: cartItem_bool_exp
+  ): cartItem_aggregate!
 
-  """fetch data from the table: "users" using primary key columns"""
-  users_by_pk(id: String!): users
+  """fetch data from the table: "cartItem" using primary key columns"""
+  cartItem_by_pk(id: uuid!): cartItem
+
+  """
+  fetch data from the table: "category"
+  """
+  category(
+    """distinct select on columns"""
+    distinct_on: [category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [category_order_by!]
+
+    """filter the rows returned"""
+    where: category_bool_exp
+  ): [category!]!
+
+  """
+  fetch aggregated fields from the table: "category"
+  """
+  category_aggregate(
+    """distinct select on columns"""
+    distinct_on: [category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [category_order_by!]
+
+    """filter the rows returned"""
+    where: category_bool_exp
+  ): category_aggregate!
+
+  """fetch data from the table: "category" using primary key columns"""
+  category_by_pk(id: uuid!): category
+
+  """
+  fetch data from the table: "menu"
+  """
+  menu(
+    """distinct select on columns"""
+    distinct_on: [menu_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [menu_order_by!]
+
+    """filter the rows returned"""
+    where: menu_bool_exp
+  ): [menu!]!
+
+  """
+  fetch aggregated fields from the table: "menu"
+  """
+  menu_aggregate(
+    """distinct select on columns"""
+    distinct_on: [menu_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [menu_order_by!]
+
+    """filter the rows returned"""
+    where: menu_bool_exp
+  ): menu_aggregate!
+
+  """fetch data from the table: "menu" using primary key columns"""
+  menu_by_pk(id: uuid!): menu
+
+  """
+  fetch data from the table: "order"
+  """
+  order(
+    """distinct select on columns"""
+    distinct_on: [order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [order_order_by!]
+
+    """filter the rows returned"""
+    where: order_bool_exp
+  ): [order!]!
+
+  """
+  fetch aggregated fields from the table: "order"
+  """
+  order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [order_order_by!]
+
+    """filter the rows returned"""
+    where: order_bool_exp
+  ): order_aggregate!
+
+  """fetch data from the table: "order" using primary key columns"""
+  order_by_pk(id: uuid!): order
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(id: String!): user
 }
 
 input SignInInput {
@@ -210,11 +1615,11 @@ input String_comparison_exp {
 
 type subscription_root {
   """
-  fetch data from the table: "users"
+  fetch data from the table: "cartItem"
   """
-  users(
+  cartItem(
     """distinct select on columns"""
-    distinct_on: [users_select_column!]
+    distinct_on: [cartItem_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -223,18 +1628,18 @@ type subscription_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
+    order_by: [cartItem_order_by!]
 
     """filter the rows returned"""
-    where: users_bool_exp
-  ): [users!]!
+    where: cartItem_bool_exp
+  ): [cartItem!]!
 
   """
-  fetch aggregated fields from the table: "users"
+  fetch aggregated fields from the table: "cartItem"
   """
-  users_aggregate(
+  cartItem_aggregate(
     """distinct select on columns"""
-    distinct_on: [users_select_column!]
+    distinct_on: [cartItem_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -243,121 +1648,310 @@ type subscription_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
+    order_by: [cartItem_order_by!]
 
     """filter the rows returned"""
-    where: users_bool_exp
-  ): users_aggregate!
+    where: cartItem_bool_exp
+  ): cartItem_aggregate!
 
-  """fetch data from the table: "users" using primary key columns"""
-  users_by_pk(id: String!): users
+  """fetch data from the table: "cartItem" using primary key columns"""
+  cartItem_by_pk(id: uuid!): cartItem
+
+  """
+  fetch data from the table: "category"
+  """
+  category(
+    """distinct select on columns"""
+    distinct_on: [category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [category_order_by!]
+
+    """filter the rows returned"""
+    where: category_bool_exp
+  ): [category!]!
+
+  """
+  fetch aggregated fields from the table: "category"
+  """
+  category_aggregate(
+    """distinct select on columns"""
+    distinct_on: [category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [category_order_by!]
+
+    """filter the rows returned"""
+    where: category_bool_exp
+  ): category_aggregate!
+
+  """fetch data from the table: "category" using primary key columns"""
+  category_by_pk(id: uuid!): category
+
+  """
+  fetch data from the table: "menu"
+  """
+  menu(
+    """distinct select on columns"""
+    distinct_on: [menu_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [menu_order_by!]
+
+    """filter the rows returned"""
+    where: menu_bool_exp
+  ): [menu!]!
+
+  """
+  fetch aggregated fields from the table: "menu"
+  """
+  menu_aggregate(
+    """distinct select on columns"""
+    distinct_on: [menu_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [menu_order_by!]
+
+    """filter the rows returned"""
+    where: menu_bool_exp
+  ): menu_aggregate!
+
+  """fetch data from the table: "menu" using primary key columns"""
+  menu_by_pk(id: uuid!): menu
+
+  """
+  fetch data from the table: "order"
+  """
+  order(
+    """distinct select on columns"""
+    distinct_on: [order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [order_order_by!]
+
+    """filter the rows returned"""
+    where: order_bool_exp
+  ): [order!]!
+
+  """
+  fetch aggregated fields from the table: "order"
+  """
+  order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [order_order_by!]
+
+    """filter the rows returned"""
+    where: order_bool_exp
+  ): order_aggregate!
+
+  """fetch data from the table: "order" using primary key columns"""
+  order_by_pk(id: uuid!): order
+
+  """
+  fetch data from the table: "user"
+  """
+  user(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): [user!]!
+
+  """
+  fetch aggregated fields from the table: "user"
+  """
+  user_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_order_by!]
+
+    """filter the rows returned"""
+    where: user_bool_exp
+  ): user_aggregate!
+
+  """fetch data from the table: "user" using primary key columns"""
+  user_by_pk(id: String!): user
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
 }
 
 """
-columns and relationships of "users"
+columns and relationships of "user"
 """
-type users {
+type user {
   id: String!
   name: String!
   password: String!
 }
 
 """
-aggregated selection of "users"
+aggregated selection of "user"
 """
-type users_aggregate {
-  aggregate: users_aggregate_fields
-  nodes: [users!]!
+type user_aggregate {
+  aggregate: user_aggregate_fields
+  nodes: [user!]!
 }
 
 """
-aggregate fields of "users"
+aggregate fields of "user"
 """
-type users_aggregate_fields {
-  count(columns: [users_select_column!], distinct: Boolean): Int!
-  max: users_max_fields
-  min: users_min_fields
+type user_aggregate_fields {
+  count(columns: [user_select_column!], distinct: Boolean): Int!
+  max: user_max_fields
+  min: user_min_fields
 }
 
 """
-Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+Boolean expression to filter rows from the table "user". All fields are combined with a logical 'AND'.
 """
-input users_bool_exp {
-  _and: [users_bool_exp!]
-  _not: users_bool_exp
-  _or: [users_bool_exp!]
+input user_bool_exp {
+  _and: [user_bool_exp!]
+  _not: user_bool_exp
+  _or: [user_bool_exp!]
   id: String_comparison_exp
   name: String_comparison_exp
   password: String_comparison_exp
 }
 
 """
-unique or primary key constraints on table "users"
+unique or primary key constraints on table "user"
 """
-enum users_constraint {
+enum user_constraint {
   """unique or primary key constraint"""
   users_pkey
 }
 
 """
-input type for inserting data into table "users"
+input type for inserting data into table "user"
 """
-input users_insert_input {
+input user_insert_input {
   id: String
   name: String
   password: String
 }
 
 """aggregate max on columns"""
-type users_max_fields {
+type user_max_fields {
   id: String
   name: String
   password: String
 }
 
 """aggregate min on columns"""
-type users_min_fields {
+type user_min_fields {
   id: String
   name: String
   password: String
 }
 
 """
-response of any mutation on the table "users"
+response of any mutation on the table "user"
 """
-type users_mutation_response {
+type user_mutation_response {
   """number of rows affected by the mutation"""
   affected_rows: Int!
 
   """data from the rows affected by the mutation"""
-  returning: [users!]!
+  returning: [user!]!
 }
 
 """
-on conflict condition type for table "users"
+on conflict condition type for table "user"
 """
-input users_on_conflict {
-  constraint: users_constraint!
-  update_columns: [users_update_column!]! = []
-  where: users_bool_exp
+input user_on_conflict {
+  constraint: user_constraint!
+  update_columns: [user_update_column!]! = []
+  where: user_bool_exp
 }
 
-"""Ordering options when selecting data from "users"."""
-input users_order_by {
+"""Ordering options when selecting data from "user"."""
+input user_order_by {
   id: order_by
   name: order_by
   password: order_by
 }
 
-"""primary key columns input for table: users"""
-input users_pk_columns_input {
+"""primary key columns input for table: user"""
+input user_pk_columns_input {
   id: String!
 }
 
 """
-select columns of table "users"
+select columns of table "user"
 """
-enum users_select_column {
+enum user_select_column {
   """column name"""
   id
 
@@ -369,18 +1963,18 @@ enum users_select_column {
 }
 
 """
-input type for updating data in table "users"
+input type for updating data in table "user"
 """
-input users_set_input {
+input user_set_input {
   id: String
   name: String
   password: String
 }
 
 """
-update columns of table "users"
+update columns of table "user"
 """
-enum users_update_column {
+enum user_update_column {
   """column name"""
   id
 
@@ -389,5 +1983,22 @@ enum users_update_column {
 
   """column name"""
   password
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
 }
 

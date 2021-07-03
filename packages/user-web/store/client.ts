@@ -5,5 +5,11 @@ import { cache } from "store/cache";
 
 export const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([setContext(async () => {}), new HttpLink({ uri: process.env.HASURA_GRAPHQL_URL })]),
+  link: ApolloLink.from([
+    setContext(async () => {
+      const token = localStorage.getItem("token");
+      return { headers: token ? { Authorization: `Bearer ${token}` } : {} };
+    }),
+    new HttpLink({ uri: process.env.HASURA_GRAPHQL_URL }),
+  ]),
 });

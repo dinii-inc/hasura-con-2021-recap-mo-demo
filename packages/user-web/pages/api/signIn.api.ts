@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (typeof id !== "string" || id === "") return res.status(400).json({ message: "`id` is required" });
   if (typeof password !== "string" || password === "") return res.status(400).json({ message: "`password` is required" });
 
-  const user = await prisma.users.findFirst({ where: { id } });
+  const user = await prisma.user.findFirst({ where: { id } });
   if (!user) return res.status(400).json({ message: "This user has not been registered" });
 
   const isValid = await bcrypt.compare(password, user.password);

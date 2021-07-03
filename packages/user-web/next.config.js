@@ -11,6 +11,9 @@ module.exports = {
   },
   reactStrictMode: true,
   pageExtensions: ["page.tsx", "api.ts"],
+  images: {
+    domains: ["localhost"],
+  },
   rewrites: () => [
     {
       source: "/",
