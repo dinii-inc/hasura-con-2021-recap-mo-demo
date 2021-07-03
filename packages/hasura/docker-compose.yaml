@@ -14,14 +14,17 @@ services:
     depends_on:
       - "postgres"
     restart: always
+    env_file:
+      - .env
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
-      ## enable debugging mode. It is recommended to disable this in production
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      ## uncomment next line to set an admin secret
-      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+      HASURA_GRAPHQL_JWT_SECRET: |
+        {"type":"RS256","key":"-----BEGIN RSA PUBLIC KEY-----\nMIICCgKCAgEAphzuqcRSAlr+3PEvLOvqibGGKOLyGh1u9KxZ6dTzoLNV45IO4bfu\nOdF+qio3KxWF2AWl0gIBP1QfEdoh2vQCxDh/jvKGySEU+w20OPvHtbFzB1xzTrTs\nUNWXgEj9EmO9UneWxL7xe+oo6xOEpknN4KrvRYauRaqDRw7SqQ97ZN4Bw1C2QsPy\n5Su5RSW/4fEx2uE+K5+utbB66kybmTNlt7wU2Mmm7VM/8M01EgeNVKJ1XsNJltQ8\n3nlGxaLsHroW6Pv0IGbkUQ0XRBq+pBGDbgR2yfdfG2OKnB84n9mffXSqRCTdjrph\nDl4pUfSxllNKxMKk9Y+G+PA9MqIV05YAIxo/QS/cUE/zT0V+HAlOHJF785zpbCLc\nLHvw/WBuc19BEio4BaHHxlWd6Ap06GJu33t+eA4NkddS7EDDAbp7Afu+yBn+njAb\n1afvv350rSRj3foePkV9c7tuwCQrZUyx6ywZtjkc/PCG1awXNlVyPygK4EohFT22\nG2meyTY2tIu2n9QMFoxFcBizedBD/+WGPLoHx1Ge+whUny7LJE67iMF9OpwJrG8M\nmqT0TNDp32vze3KdQYXO6LVbsr/CKdBYdEgmRDCwdLzV+SukWj0D/j+suO0iVE0F\noGbciSZ39DGfsxyuw91QGlysBa2V74u1OsrvXp453tNiCc28OzMlSEECAwEAAQ==\n-----END RSA PUBLIC KEY-----","claims_map":{"x-hasura-allowed-roles":{"path":"$$.['https://hasura.io/jwt/claims'].x-hasura-allowed-roles","default":["anonymous"]},"x-hasura-default-role":{"path":"$$.['https://hasura.io/jwt/claims'].x-hasura-default-role","default":"anonymous"},"x-hasura-user-id":{"path":"$$.['https://hasura.io/jwt/claims'].x-hasura-user-id","default":""}}}
+      ACTION_BASE_URL: http://host.docker.internal:3000
+
 volumes:
   db_data:
