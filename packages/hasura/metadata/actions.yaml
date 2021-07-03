@@ -1,4 +1,14 @@
 actions:
+- name: addMenuIntoCart
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3000/api/addMenuIntoCart
+    forward_client_headers: true
+    headers:
+    - name: ACTION_SECRET
+      value_from_env: ACTION_SECRET
+  permissions:
+  - role: user
 - name: signIn
   definition:
     kind: synchronous
@@ -24,7 +34,13 @@ custom_types:
   input_objects:
   - name: SignUpInput
   - name: SignInInput
+  - name: AddCartInput
+  - name: AddMenuIntoCartInput
+  - name: AddMenuIntoInput
   objects:
   - name: SignUpOutput
   - name: SignInOutput
+  - name: AddCartOutput
+  - name: AddMenuIntoCartOutput
+  - name: AddMenuIntoOutput
   scalars: []

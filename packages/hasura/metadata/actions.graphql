@@ -1,4 +1,11 @@
 type Mutation {
+  addMenuIntoCart (
+    input: AddMenuIntoCartInput!
+  ): AddMenuIntoCartOutput
+}
+
+
+type Mutation {
   signIn (
     input: SignInInput!
   ): SignInOutput
@@ -25,11 +32,38 @@ input SignInInput {
   password : String!
 }
 
+input AddCartInput {
+  menuId : uuid!
+  quantity : Int!
+}
+
+input AddMenuIntoCartInput {
+  menuId : uuid!
+  quantity : Int!
+}
+
+input AddMenuIntoInput {
+  menuId : uuid!
+  quantity : Int!
+}
+
 type SignUpOutput {
   token : String!
 }
 
 type SignInOutput {
   token : String!
+}
+
+type AddCartOutput {
+  success : Boolean!
+}
+
+type AddMenuIntoCartOutput {
+  success : Boolean!
+}
+
+type AddMenuIntoOutput {
+  success : Boolean!
 }
 

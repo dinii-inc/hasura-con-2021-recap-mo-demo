@@ -36,7 +36,7 @@ model cartItem {
   menuId      String @db.Uuid
   addedUserId String
   name        String
-  price       String
+  price       Int
   quantity    Int
   user        user   @relation(fields: [addedUserId], references: [id])
   menu        menu   @relation(fields: [menuId], references: [id])

@@ -11,3 +11,18 @@ query IndexGetCategoriesAndMenus {
     image
   }
 }
+
+subscription IndexSubscribeCartItem {
+  cartItem {
+    id
+    name
+    price
+    quantity
+  }
+}
+
+mutation IndexAddMenuIntoCart($input: AddMenuIntoCartInput!) {
+  addMenuIntoCart(input: $input) {
+    success
+  }
+}

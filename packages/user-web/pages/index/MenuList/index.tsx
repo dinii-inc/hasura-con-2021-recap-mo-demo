@@ -36,13 +36,14 @@ const Description = styled.div`
 
 type Props = {
   menus: Menu[];
+  onClick: (menuId: string) => void;
 };
 
-export const MenuList = ({ menus }: Props) => {
+export const MenuList = ({ menus, onClick }: Props) => {
   return (
     <Container>
       {menus.map(({ id, name, price, image }) => (
-        <Card key={id}>
+        <Card key={id} onClick={() => onClick(id)}>
           <StyledImage key={image} src={`http://localhost:3000/images/${image}`} width={160} height={160} alt={name} />
           <Spacer size={1} />
           <Description>

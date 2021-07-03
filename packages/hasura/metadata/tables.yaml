@@ -1,6 +1,13 @@
 - table:
     schema: public
     name: cartItem
+  object_relationships:
+  - name: menu
+    using:
+      foreign_key_constraint_on: menuId
+  - name: user
+    using:
+      foreign_key_constraint_on: addedUserId
   select_permissions:
   - role: user
     permission:
@@ -37,6 +44,21 @@
   - name: category
     using:
       foreign_key_constraint_on: categoryId
+  array_relationships:
+  - name: cartItems
+    using:
+      foreign_key_constraint_on:
+        column: menuId
+        table:
+          schema: public
+          name: cartItem
+  - name: orders
+    using:
+      foreign_key_constraint_on:
+        column: menuId
+        table:
+          schema: public
+          name: order
   select_permissions:
   - role: user
     permission:
@@ -50,6 +72,10 @@
 - table:
     schema: public
     name: order
+  object_relationships:
+  - name: menu
+    using:
+      foreign_key_constraint_on: menuId
   select_permissions:
   - role: user
     permission:
@@ -65,6 +91,14 @@
 - table:
     schema: public
     name: user
+  array_relationships:
+  - name: cartItems
+    using:
+      foreign_key_constraint_on:
+        column: addedUserId
+        table:
+          schema: public
+          name: cartItem
   select_permissions:
   - role: user
     permission:

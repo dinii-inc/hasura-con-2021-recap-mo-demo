@@ -10,16 +10,31 @@ directive @cached(
   ttl: Int! = 60
 ) on QUERY
 
+input AddMenuIntoCartInput {
+  menuId: uuid!
+  quantity: Int!
+}
+
+type AddMenuIntoCartOutput {
+  success: Boolean!
+}
+
 """
 columns and relationships of "cartItem"
 """
 type cartItem {
   addedUserId: String!
   id: uuid!
+
+  """An object relationship"""
+  menu: menu!
   menuId: uuid!
   name: String!
-  price: String!
+  price: Int!
   quantity: Int!
+
+  """An object relationship"""
+  user: user!
 }
 
 """
@@ -47,9 +62,45 @@ type cartItem_aggregate_fields {
   variance: cartItem_variance_fields
 }
 
+"""
+order by aggregate values of table "cartItem"
+"""
+input cartItem_aggregate_order_by {
+  avg: cartItem_avg_order_by
+  count: order_by
+  max: cartItem_max_order_by
+  min: cartItem_min_order_by
+  stddev: cartItem_stddev_order_by
+  stddev_pop: cartItem_stddev_pop_order_by
+  stddev_samp: cartItem_stddev_samp_order_by
+  sum: cartItem_sum_order_by
+  var_pop: cartItem_var_pop_order_by
+  var_samp: cartItem_var_samp_order_by
+  variance: cartItem_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "cartItem"
+"""
+input cartItem_arr_rel_insert_input {
+  data: [cartItem_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: cartItem_on_conflict
+}
+
 """aggregate avg on columns"""
 type cartItem_avg_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by avg() on columns of table "cartItem"
+"""
+input cartItem_avg_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """
@@ -61,10 +112,12 @@ input cartItem_bool_exp {
   _or: [cartItem_bool_exp!]
   addedUserId: String_comparison_exp
   id: uuid_comparison_exp
+  menu: menu_bool_exp
   menuId: uuid_comparison_exp
   name: String_comparison_exp
-  price: String_comparison_exp
+  price: Int_comparison_exp
   quantity: Int_comparison_exp
+  user: user_bool_exp
 }
 
 """
@@ -79,6 +132,7 @@ enum cartItem_constraint {
 input type for incrementing numeric columns in table "cartItem"
 """
 input cartItem_inc_input {
+  price: Int
   quantity: Int
 }
 
@@ -88,10 +142,12 @@ input type for inserting data into table "cartItem"
 input cartItem_insert_input {
   addedUserId: String
   id: uuid
+  menu: menu_obj_rel_insert_input
   menuId: uuid
   name: String
-  price: String
+  price: Int
   quantity: Int
+  user: user_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -100,8 +156,20 @@ type cartItem_max_fields {
   id: uuid
   menuId: uuid
   name: String
-  price: String
+  price: Int
   quantity: Int
+}
+
+"""
+order by max() on columns of table "cartItem"
+"""
+input cartItem_max_order_by {
+  addedUserId: order_by
+  id: order_by
+  menuId: order_by
+  name: order_by
+  price: order_by
+  quantity: order_by
 }
 
 """aggregate min on columns"""
@@ -110,8 +178,20 @@ type cartItem_min_fields {
   id: uuid
   menuId: uuid
   name: String
-  price: String
+  price: Int
   quantity: Int
+}
+
+"""
+order by min() on columns of table "cartItem"
+"""
+input cartItem_min_order_by {
+  addedUserId: order_by
+  id: order_by
+  menuId: order_by
+  name: order_by
+  price: order_by
+  quantity: order_by
 }
 
 """
@@ -138,10 +218,12 @@ input cartItem_on_conflict {
 input cartItem_order_by {
   addedUserId: order_by
   id: order_by
+  menu: menu_order_by
   menuId: order_by
   name: order_by
   price: order_by
   quantity: order_by
+  user: user_order_by
 }
 
 """primary key columns input for table: cartItem"""
@@ -180,28 +262,64 @@ input cartItem_set_input {
   id: uuid
   menuId: uuid
   name: String
-  price: String
+  price: Int
   quantity: Int
 }
 
 """aggregate stddev on columns"""
 type cartItem_stddev_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by stddev() on columns of table "cartItem"
+"""
+input cartItem_stddev_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type cartItem_stddev_pop_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by stddev_pop() on columns of table "cartItem"
+"""
+input cartItem_stddev_pop_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type cartItem_stddev_samp_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by stddev_samp() on columns of table "cartItem"
+"""
+input cartItem_stddev_samp_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """aggregate sum on columns"""
 type cartItem_sum_fields {
+  price: Int
   quantity: Int
+}
+
+"""
+order by sum() on columns of table "cartItem"
+"""
+input cartItem_sum_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """
@@ -229,17 +347,44 @@ enum cartItem_update_column {
 
 """aggregate var_pop on columns"""
 type cartItem_var_pop_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by var_pop() on columns of table "cartItem"
+"""
+input cartItem_var_pop_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """aggregate var_samp on columns"""
 type cartItem_var_samp_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by var_samp() on columns of table "cartItem"
+"""
+input cartItem_var_samp_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """aggregate variance on columns"""
 type cartItem_variance_fields {
+  price: Float
   quantity: Float
+}
+
+"""
+order by variance() on columns of table "cartItem"
+"""
+input cartItem_variance_order_by {
+  price: order_by
+  quantity: order_by
 }
 
 """
@@ -435,12 +580,84 @@ input Int_comparison_exp {
 columns and relationships of "menu"
 """
 type menu {
+  """An array relationship"""
+  cartItems(
+    """distinct select on columns"""
+    distinct_on: [cartItem_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [cartItem_order_by!]
+
+    """filter the rows returned"""
+    where: cartItem_bool_exp
+  ): [cartItem!]!
+
+  """An aggregate relationship"""
+  cartItems_aggregate(
+    """distinct select on columns"""
+    distinct_on: [cartItem_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [cartItem_order_by!]
+
+    """filter the rows returned"""
+    where: cartItem_bool_exp
+  ): cartItem_aggregate!
+
   """An object relationship"""
   category: category!
   categoryId: uuid!
   id: uuid!
   image: String!
   name: String!
+
+  """An array relationship"""
+  orders(
+    """distinct select on columns"""
+    distinct_on: [order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [order_order_by!]
+
+    """filter the rows returned"""
+    where: order_bool_exp
+  ): [order!]!
+
+  """An aggregate relationship"""
+  orders_aggregate(
+    """distinct select on columns"""
+    distinct_on: [order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [order_order_by!]
+
+    """filter the rows returned"""
+    where: order_bool_exp
+  ): order_aggregate!
   price: Int!
 }
 
@@ -515,11 +732,13 @@ input menu_bool_exp {
   _and: [menu_bool_exp!]
   _not: menu_bool_exp
   _or: [menu_bool_exp!]
+  cartItems: cartItem_bool_exp
   category: category_bool_exp
   categoryId: uuid_comparison_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
   name: String_comparison_exp
+  orders: order_bool_exp
   price: Int_comparison_exp
 }
 
@@ -542,11 +761,13 @@ input menu_inc_input {
 input type for inserting data into table "menu"
 """
 input menu_insert_input {
+  cartItems: cartItem_arr_rel_insert_input
   category: category_obj_rel_insert_input
   categoryId: uuid
   id: uuid
   image: String
   name: String
+  orders: order_arr_rel_insert_input
   price: Int
 }
 
@@ -602,6 +823,16 @@ type menu_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "menu"
+"""
+input menu_obj_rel_insert_input {
+  data: menu_insert_input!
+
+  """on conflict condition"""
+  on_conflict: menu_on_conflict
+}
+
+"""
 on conflict condition type for table "menu"
 """
 input menu_on_conflict {
@@ -612,11 +843,13 @@ input menu_on_conflict {
 
 """Ordering options when selecting data from "menu"."""
 input menu_order_by {
+  cartItems_aggregate: cartItem_aggregate_order_by
   category: category_order_by
   categoryId: order_by
   id: order_by
   image: order_by
   name: order_by
+  orders_aggregate: order_aggregate_order_by
   price: order_by
 }
 
@@ -762,6 +995,8 @@ input menu_variance_order_by {
 
 """mutation root"""
 type mutation_root {
+  addMenuIntoCart(input: AddMenuIntoCartInput!): AddMenuIntoCartOutput
+
   """
   delete data from the table: "cartItem"
   """
@@ -1063,6 +1298,9 @@ columns and relationships of "order"
 """
 type order {
   id: uuid!
+
+  """An object relationship"""
+  menu: menu!
   menuId: uuid!
   name: String!
   orderedAt: timestamp!
@@ -1096,9 +1334,43 @@ type order_aggregate_fields {
   variance: order_variance_fields
 }
 
+"""
+order by aggregate values of table "order"
+"""
+input order_aggregate_order_by {
+  avg: order_avg_order_by
+  count: order_by
+  max: order_max_order_by
+  min: order_min_order_by
+  stddev: order_stddev_order_by
+  stddev_pop: order_stddev_pop_order_by
+  stddev_samp: order_stddev_samp_order_by
+  sum: order_sum_order_by
+  var_pop: order_var_pop_order_by
+  var_samp: order_var_samp_order_by
+  variance: order_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "order"
+"""
+input order_arr_rel_insert_input {
+  data: [order_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: order_on_conflict
+}
+
 """aggregate avg on columns"""
 type order_avg_fields {
   quantity: Float
+}
+
+"""
+order by avg() on columns of table "order"
+"""
+input order_avg_order_by {
+  quantity: order_by
 }
 
 """
@@ -1109,6 +1381,7 @@ input order_bool_exp {
   _not: order_bool_exp
   _or: [order_bool_exp!]
   id: uuid_comparison_exp
+  menu: menu_bool_exp
   menuId: uuid_comparison_exp
   name: String_comparison_exp
   orderedAt: timestamp_comparison_exp
@@ -1158,6 +1431,7 @@ input type for inserting data into table "order"
 """
 input order_insert_input {
   id: uuid
+  menu: menu_obj_rel_insert_input
   menuId: uuid
   name: String
   orderedAt: timestamp
@@ -1177,6 +1451,19 @@ type order_max_fields {
   quantity: Int
 }
 
+"""
+order by max() on columns of table "order"
+"""
+input order_max_order_by {
+  id: order_by
+  menuId: order_by
+  name: order_by
+  orderedAt: order_by
+  orderedUserId: order_by
+  price: order_by
+  quantity: order_by
+}
+
 """aggregate min on columns"""
 type order_min_fields {
   id: uuid
@@ -1186,6 +1473,19 @@ type order_min_fields {
   orderedUserId: String
   price: String
   quantity: Int
+}
+
+"""
+order by min() on columns of table "order"
+"""
+input order_min_order_by {
+  id: order_by
+  menuId: order_by
+  name: order_by
+  orderedAt: order_by
+  orderedUserId: order_by
+  price: order_by
+  quantity: order_by
 }
 
 """
@@ -1211,6 +1511,7 @@ input order_on_conflict {
 """Ordering options when selecting data from "order"."""
 input order_order_by {
   id: order_by
+  menu: menu_order_by
   menuId: order_by
   name: order_by
   orderedAt: order_by
@@ -1268,9 +1569,23 @@ type order_stddev_fields {
   quantity: Float
 }
 
+"""
+order by stddev() on columns of table "order"
+"""
+input order_stddev_order_by {
+  quantity: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type order_stddev_pop_fields {
   quantity: Float
+}
+
+"""
+order by stddev_pop() on columns of table "order"
+"""
+input order_stddev_pop_order_by {
+  quantity: order_by
 }
 
 """aggregate stddev_samp on columns"""
@@ -1278,9 +1593,23 @@ type order_stddev_samp_fields {
   quantity: Float
 }
 
+"""
+order by stddev_samp() on columns of table "order"
+"""
+input order_stddev_samp_order_by {
+  quantity: order_by
+}
+
 """aggregate sum on columns"""
 type order_sum_fields {
   quantity: Int
+}
+
+"""
+order by sum() on columns of table "order"
+"""
+input order_sum_order_by {
+  quantity: order_by
 }
 
 """
@@ -1314,14 +1643,35 @@ type order_var_pop_fields {
   quantity: Float
 }
 
+"""
+order by var_pop() on columns of table "order"
+"""
+input order_var_pop_order_by {
+  quantity: order_by
+}
+
 """aggregate var_samp on columns"""
 type order_var_samp_fields {
   quantity: Float
 }
 
+"""
+order by var_samp() on columns of table "order"
+"""
+input order_var_samp_order_by {
+  quantity: order_by
+}
+
 """aggregate variance on columns"""
 type order_variance_fields {
   quantity: Float
+}
+
+"""
+order by variance() on columns of table "order"
+"""
+input order_variance_order_by {
+  quantity: order_by
 }
 
 type query_root {
@@ -1851,6 +2201,41 @@ input timestamp_comparison_exp {
 columns and relationships of "user"
 """
 type user {
+  """An array relationship"""
+  cartItems(
+    """distinct select on columns"""
+    distinct_on: [cartItem_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [cartItem_order_by!]
+
+    """filter the rows returned"""
+    where: cartItem_bool_exp
+  ): [cartItem!]!
+
+  """An aggregate relationship"""
+  cartItems_aggregate(
+    """distinct select on columns"""
+    distinct_on: [cartItem_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [cartItem_order_by!]
+
+    """filter the rows returned"""
+    where: cartItem_bool_exp
+  ): cartItem_aggregate!
   id: String!
   name: String!
   password: String!
@@ -1880,6 +2265,7 @@ input user_bool_exp {
   _and: [user_bool_exp!]
   _not: user_bool_exp
   _or: [user_bool_exp!]
+  cartItems: cartItem_bool_exp
   id: String_comparison_exp
   name: String_comparison_exp
   password: String_comparison_exp
@@ -1897,6 +2283,7 @@ enum user_constraint {
 input type for inserting data into table "user"
 """
 input user_insert_input {
+  cartItems: cartItem_arr_rel_insert_input
   id: String
   name: String
   password: String
@@ -1928,6 +2315,16 @@ type user_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "user"
+"""
+input user_obj_rel_insert_input {
+  data: user_insert_input!
+
+  """on conflict condition"""
+  on_conflict: user_on_conflict
+}
+
+"""
 on conflict condition type for table "user"
 """
 input user_on_conflict {
@@ -1938,6 +2335,7 @@ input user_on_conflict {
 
 """Ordering options when selecting data from "user"."""
 input user_order_by {
+  cartItems_aggregate: cartItem_aggregate_order_by
   id: order_by
   name: order_by
   password: order_by

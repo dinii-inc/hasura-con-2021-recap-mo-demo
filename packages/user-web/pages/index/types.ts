@@ -1,5 +1,7 @@
-import { IndexGetCategoriesAndMenusQuery } from "pages/index/queries";
+import { IndexGetCategoriesAndMenusQuery, IndexSubscribeCartItemSubscription } from "pages/index/queries";
 
 export type Category = IndexGetCategoriesAndMenusQuery["category"][number];
 
 export type Menu = IndexGetCategoriesAndMenusQuery["menu"][number];
+
+export type CartItem = IndexSubscribeCartItemSubscription["cartItem"][number];

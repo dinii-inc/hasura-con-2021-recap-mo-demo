@@ -3,13 +3,14 @@ import bcrypt from "bcrypt";
 import { issueToken } from "pages/api/internal/issueToken";
 import { isValidRequest } from "pages/api/internal/isValidRequest";
 import { prisma } from "pages/api/internal/prisma";
+import { SignInOutput, SignUpInput } from "types/graphql";
 
-type Data = { token: string } | { message: string };
+type Data = SignInOutput | { message: string };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (!isValidRequest(req, res)) return;
 
-  const { id, name, password } = req.body.input.input;
+  const { id, name, password } = req.body.input.input as SignUpInput;
 
   if (typeof id !== "string" || id === "") return res.status(400).json({ message: "`id` is required" });
   if (typeof name !== "string" || name === "") return res.status(400).json({ message: "`name` is required" });
