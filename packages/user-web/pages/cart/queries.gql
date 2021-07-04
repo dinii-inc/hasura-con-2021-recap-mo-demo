@@ -11,8 +11,8 @@ query CartGetCartItems {
   }
 }
 
-mutation IndexAddMenuIntoCart($input: AddMenuIntoCartInput!) {
-  addMenuIntoCart(input: $input) {
+mutation CartOrderCartItems {
+  orderCartItems {
     success
   }
 }

@@ -1,6 +1,6 @@
 import { Fab as MuiFab, Zoom } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
-import { CartItem } from "pages/index/types";
+
 import React from "react";
 import styled, { useTheme } from "styled-components";
 
@@ -10,9 +10,11 @@ const StyledFab = styled(MuiFab)`
   right: ${({ theme }) => theme.spacing(2)}px;
 `;
 
-type Props = {};
+type Props = {
+  onOrderCartItems: () => void;
+};
 
-export const Fab = () => {
+export const Fab = ({ onOrderCartItems }: Props) => {
   const theme = useTheme();
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
@@ -21,7 +23,7 @@ export const Fab = () => {
 
   return (
     <Zoom in timeout={transitionDuration} unmountOnExit>
-      <StyledFab color="secondary" variant="extended">
+      <StyledFab color="secondary" variant="extended" onClick={onOrderCartItems}>
         <Send />
         注文する
       </StyledFab>

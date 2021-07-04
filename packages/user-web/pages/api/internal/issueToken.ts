@@ -4,8 +4,6 @@ const key = process.env["JWT_SECRET_KEY"];
 
 if (!key) throw new Error("Please set JWT_SECRET_KEY env");
 
-console.log({ key });
-
 export const issueToken = (id: string) =>
   jwt.sign(
     {

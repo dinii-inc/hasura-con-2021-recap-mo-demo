@@ -47,8 +47,8 @@ model order {
   menuId        String   @db.Uuid
   orderedUserId String
   name          String
-  price         String
   quantity      Int
-  orderedAt     DateTime @db.Timestamp(6)
+  orderedAt     DateTime @default(now()) @db.Timestamp(6)
+  price         Int
   menu          menu     @relation(fields: [menuId], references: [id])
 }

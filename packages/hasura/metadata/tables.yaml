@@ -84,9 +84,9 @@
       - menuId
       - orderedUserId
       - name
-      - price
       - quantity
       - orderedAt
+      - price
       filter: {}
 - table:
     schema: public

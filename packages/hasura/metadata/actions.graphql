@@ -6,6 +6,18 @@ type Mutation {
 
 
 type Mutation {
+  orderCartItems : OrderCartItemsOutput
+}
+
+
+type Mutation {
+  removeMenuFromCart (
+    input: RemoveMenuFromCartInput!
+  ): RemoveMenuFromCartOutput
+}
+
+
+type Mutation {
   signIn (
     input: SignInInput!
   ): SignInOutput
@@ -47,6 +59,11 @@ input AddMenuIntoInput {
   quantity : Int!
 }
 
+input RemoveMenuFromCartInput {
+  menuId : uuid!
+  quantity : Int!
+}
+
 type SignUpOutput {
   token : String!
 }
@@ -64,6 +81,14 @@ type AddMenuIntoCartOutput {
 }
 
 type AddMenuIntoOutput {
+  success : Boolean!
+}
+
+type RemoveMenuFromCartOutput {
+  success : Boolean!
+}
+
+type OrderCartItemsOutput {
   success : Boolean!
 }
 

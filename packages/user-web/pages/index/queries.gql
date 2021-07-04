@@ -17,3 +17,9 @@ mutation IndexAddMenuIntoCart($input: AddMenuIntoCartInput!) {
     success
   }
 }
+
+mutation IndexRemoveMenuFromCart($input: RemoveMenuFromCartInput!) {
+  removeMenuFromCart(input: $input) {
+    success
+  }
+}

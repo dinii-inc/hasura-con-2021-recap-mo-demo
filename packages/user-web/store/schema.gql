@@ -1171,6 +1171,8 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: user_on_conflict
   ): user
+  orderCartItems: OrderCartItemsOutput
+  removeMenuFromCart(input: RemoveMenuFromCartInput!): RemoveMenuFromCartOutput
   signIn(input: SignInInput!): SignInOutput
   signUp(input: SignUpInput!): SignUpOutput
 
@@ -1305,7 +1307,7 @@ type order {
   name: String!
   orderedAt: timestamp!
   orderedUserId: String!
-  price: String!
+  price: Int!
   quantity: Int!
 }
 
@@ -1363,6 +1365,7 @@ input order_arr_rel_insert_input {
 
 """aggregate avg on columns"""
 type order_avg_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1370,6 +1373,7 @@ type order_avg_fields {
 order by avg() on columns of table "order"
 """
 input order_avg_order_by {
+  price: order_by
   quantity: order_by
 }
 
@@ -1386,7 +1390,7 @@ input order_bool_exp {
   name: String_comparison_exp
   orderedAt: timestamp_comparison_exp
   orderedUserId: String_comparison_exp
-  price: String_comparison_exp
+  price: Int_comparison_exp
   quantity: Int_comparison_exp
 }
 
@@ -1423,6 +1427,7 @@ enum order_constraint {
 input type for incrementing numeric columns in table "order"
 """
 input order_inc_input {
+  price: Int
   quantity: Int
 }
 
@@ -1436,7 +1441,7 @@ input order_insert_input {
   name: String
   orderedAt: timestamp
   orderedUserId: String
-  price: String
+  price: Int
   quantity: Int
 }
 
@@ -1447,7 +1452,7 @@ type order_max_fields {
   name: String
   orderedAt: timestamp
   orderedUserId: String
-  price: String
+  price: Int
   quantity: Int
 }
 
@@ -1471,7 +1476,7 @@ type order_min_fields {
   name: String
   orderedAt: timestamp
   orderedUserId: String
-  price: String
+  price: Int
   quantity: Int
 }
 
@@ -1560,12 +1565,13 @@ input order_set_input {
   name: String
   orderedAt: timestamp
   orderedUserId: String
-  price: String
+  price: Int
   quantity: Int
 }
 
 """aggregate stddev on columns"""
 type order_stddev_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1573,11 +1579,13 @@ type order_stddev_fields {
 order by stddev() on columns of table "order"
 """
 input order_stddev_order_by {
+  price: order_by
   quantity: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type order_stddev_pop_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1585,11 +1593,13 @@ type order_stddev_pop_fields {
 order by stddev_pop() on columns of table "order"
 """
 input order_stddev_pop_order_by {
+  price: order_by
   quantity: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type order_stddev_samp_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1597,11 +1607,13 @@ type order_stddev_samp_fields {
 order by stddev_samp() on columns of table "order"
 """
 input order_stddev_samp_order_by {
+  price: order_by
   quantity: order_by
 }
 
 """aggregate sum on columns"""
 type order_sum_fields {
+  price: Int
   quantity: Int
 }
 
@@ -1609,6 +1621,7 @@ type order_sum_fields {
 order by sum() on columns of table "order"
 """
 input order_sum_order_by {
+  price: order_by
   quantity: order_by
 }
 
@@ -1640,6 +1653,7 @@ enum order_update_column {
 
 """aggregate var_pop on columns"""
 type order_var_pop_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1647,11 +1661,13 @@ type order_var_pop_fields {
 order by var_pop() on columns of table "order"
 """
 input order_var_pop_order_by {
+  price: order_by
   quantity: order_by
 }
 
 """aggregate var_samp on columns"""
 type order_var_samp_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1659,11 +1675,13 @@ type order_var_samp_fields {
 order by var_samp() on columns of table "order"
 """
 input order_var_samp_order_by {
+  price: order_by
   quantity: order_by
 }
 
 """aggregate variance on columns"""
 type order_variance_fields {
+  price: Float
   quantity: Float
 }
 
@@ -1671,7 +1689,12 @@ type order_variance_fields {
 order by variance() on columns of table "order"
 """
 input order_variance_order_by {
+  price: order_by
   quantity: order_by
+}
+
+type OrderCartItemsOutput {
+  success: Boolean!
 }
 
 type query_root {
@@ -1889,6 +1912,15 @@ type query_root {
 
   """fetch data from the table: "user" using primary key columns"""
   user_by_pk(id: String!): user
+}
+
+input RemoveMenuFromCartInput {
+  menuId: uuid!
+  quantity: Int!
+}
+
+type RemoveMenuFromCartOutput {
+  success: Boolean!
 }
 
 input SignInInput {
