@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "hasura:migration": "source .env && hasura migrate apply --admin-secret ${HASURA_GRAPHQL_ADMIN_SECRET} && hasura metadata apply --admin-secret ${HASURA_GRAPHQL_ADMIN_SECRET}",
+    "hasura:console": "source .env && hasura console --admin-secret ${HASURA_GRAPHQL_ADMIN_SECRET}"
+  },
   "devDependencies": {
     "hasura-cli": "^v2.0.0-beta.1"
   }
