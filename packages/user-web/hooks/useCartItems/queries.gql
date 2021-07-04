@@ -1,0 +1,12 @@
+subscription CartItems {
+  cartItem {
+    id
+    menuId
+    name
+    price
+    quantity
+    menu {
+      image
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import { Fab as MuiFab, Zoom } from "@material-ui/core";
-import { Navigation } from "@material-ui/icons";
-import { useRouter } from "next/dist/client/router";
+import { Send } from "@material-ui/icons";
 import { CartItem } from "pages/index/types";
 import React from "react";
 import styled, { useTheme } from "styled-components";
@@ -11,12 +10,9 @@ const StyledFab = styled(MuiFab)`
   right: ${({ theme }) => theme.spacing(2)}px;
 `;
 
-type Props = {
-  cartItems: CartItem[];
-};
+type Props = {};
 
-export const Fab = ({ cartItems }: Props) => {
-  const router = useRouter();
+export const Fab = () => {
   const theme = useTheme();
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
@@ -24,10 +20,10 @@ export const Fab = ({ cartItems }: Props) => {
   };
 
   return (
-    <Zoom in={cartItems.length > 0} timeout={transitionDuration} unmountOnExit>
-      <StyledFab color="secondary" variant="extended" onClick={() => router.push("/cart")}>
-        <Navigation />
-        注文を確認する
+    <Zoom in timeout={transitionDuration} unmountOnExit>
+      <StyledFab color="secondary" variant="extended">
+        <Send />
+        注文する
       </StyledFab>
     </Zoom>
   );

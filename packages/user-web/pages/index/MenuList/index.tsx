@@ -5,7 +5,8 @@ import React from "react";
 import styled from "styled-components";
 import { formatPrice } from "util/formatPrice";
 
-import { Typography } from "@material-ui/core";
+import { Badge, Typography } from "@material-ui/core";
+import { CartItem } from "hooks/useCartItems/types";
 
 const Container = styled.div`
   display: flex;
@@ -36,15 +37,23 @@ const Description = styled.div`
 
 type Props = {
   menus: Menu[];
+  cartItems: CartItem[];
   onClick: (menuId: string) => void;
 };
 
-export const MenuList = ({ menus, onClick }: Props) => {
+export const MenuList = ({ menus, cartItems, onClick }: Props) => {
+  const cartCountMap = cartItems.reduce((acc, { menuId, quantity }) => {
+    acc[menuId] = (acc[menuId] ?? 0) + quantity;
+    return acc;
+  }, {} as Record<string, number>);
+
   return (
     <Container>
       {menus.map(({ id, name, price, image }) => (
         <Card key={id} onClick={() => onClick(id)}>
-          <StyledImage key={image} src={`http://localhost:3000/images/${image}`} width={160} height={160} alt={name} />
+          <Badge badgeContent={cartCountMap[id] ?? 0} color="secondary">
+            <StyledImage key={image} src={`http://localhost:3000/images/${image}`} width={160} height={160} alt={name} />
+          </Badge>
           <Spacer size={1} />
           <Description>
             <Name>{name}</Name>

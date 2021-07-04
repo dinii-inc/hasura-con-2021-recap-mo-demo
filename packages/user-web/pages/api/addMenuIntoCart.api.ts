@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
-import { issueToken } from "pages/api/internal/issueToken";
 import { isValidRequest } from "pages/api/internal/isValidRequest";
 import { prisma } from "pages/api/internal/prisma";
 import { AddMenuIntoCartInput, AddMenuIntoCartOutput } from "types/graphql";

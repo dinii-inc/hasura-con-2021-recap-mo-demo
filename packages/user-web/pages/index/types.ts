@@ -3,5 +3,3 @@ import { IndexGetCategoriesAndMenusQuery, IndexSubscribeCartItemSubscription } f
 export type Category = IndexGetCategoriesAndMenusQuery["category"][number];
 
 export type Menu = IndexGetCategoriesAndMenusQuery["menu"][number];
-
-export type CartItem = IndexSubscribeCartItemSubscription["cartItem"][number];

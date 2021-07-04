@@ -1,14 +1,13 @@
-query IndexGetCategoriesAndMenus {
-  category {
+query CartGetCartItems {
+  cartItem {
     id
-    name
-  }
-  menu {
-    id
-    categoryId
+    menuId
     name
     price
-    image
+    quantity
+    menu {
+      image
+    }
   }
 }
 
