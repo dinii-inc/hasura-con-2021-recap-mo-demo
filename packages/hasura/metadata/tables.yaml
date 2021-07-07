@@ -76,6 +76,9 @@
   - name: menu
     using:
       foreign_key_constraint_on: menuId
+  - name: user
+    using:
+      foreign_key_constraint_on: orderedUserId
   select_permissions:
   - role: user
     permission:
