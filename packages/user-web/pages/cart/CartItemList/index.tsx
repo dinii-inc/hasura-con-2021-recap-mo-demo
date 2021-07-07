@@ -43,7 +43,7 @@ export const CartItemList = ({ cartItems }: Props) => (
     {cartItems.map(({ id, name, price, quantity, menu }) => (
       <Card key={id}>
         <Badge badgeContent={quantity} color="secondary">
-          <StyledImage key={menu.image} src={`http://localhost:3000/images/${menu.image}`} width={64} height={64} alt={name} />
+          <StyledImage key={menu.image} src={`/images/${menu.image}`} width={64} height={64} alt={name} />
         </Badge>
         <Spacer size={1} />
         <Description>
