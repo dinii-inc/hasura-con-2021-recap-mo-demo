@@ -29,6 +29,7 @@ model user {
   name     String
   password String
   cartItem cartItem[]
+  order    order[]
 }
 
 model cartItem {
@@ -51,4 +52,5 @@ model order {
   orderedAt     DateTime @default(now()) @db.Timestamp(6)
   price         Int
   menu          menu     @relation(fields: [menuId], references: [id])
+  user          user     @relation(fields: [orderedUserId], references: [id])
 }
