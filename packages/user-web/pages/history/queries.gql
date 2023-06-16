@@ -1,0 +1,18 @@
+query CartGetCartItems {
+  cartItem {
+    id
+    menuId
+    name
+    price
+    quantity
+    menu {
+      image
+    }
+  }
+}
+
+mutation CartOrderCartItems {
+  orderCartItems {
+    success
+  }
+}

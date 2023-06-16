@@ -1,0 +1,14 @@
+subscription Orders {
+  order {
+    id
+    menuId
+    name
+    orderedUserId
+    orderedAt
+    price
+    quantity
+    menu {
+      image
+    }
+  }
+}
